@@ -1,25 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
+import CardList from './CardList';
+/*import {robots} from './robots';*/ /*replacing with fetch*/
+import SearchBox from './SearchBox';
+import './App.css'
+import Scroll from './Scroll';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-
+class App extends Component {
+	/*We want to keep track of the states and need a constructor*/
+	constructor() {
+		super()
+		this.state = {
+			robots: [], /*Used to be robots: robots*/
+			searchfield: ''
+		}
+	}
+	/*We dont need to use arrow functions because this is native to React, Only USer dfined functions require arrow functions.*/
+	componentDidMount(){
+		fetch('https://jsonplaceholder.typicode.com/users') /*Takes users from api and fills out robot cards*/
+		.then(response => response.json())  /*convert response recieved  to json*/
+		.then(users=>{this.setState({robots: users})})
+		
+	}
+	/*Make a function that will be used in SearchBox*/
+	onSearchChange = (event) => {
+		this.setState({ searchfield: event.target.value}) /* Modify the value of the serachfield property which is linked to the searchbox..which is linked to robots array.*/
+	}
+	render() {
+		const filteredRobots = this.state.robots.filter(robots =>{
+			return robots.name.toLowerCase().includes(this.state.searchfield.toLowerCase());
+		})
+		/*If it takes long to load then display loading.*/
+		if (this.state.robots.length === 0) {
+			return <h1>Loading</h1>
+		}else{
+			return (
+				<div className = 'tc'>
+					<h1 className = 'f1'>RoboFriends</h1>
+					<SearchBox searchChange = {this.onSearchChange}/>
+					<Scroll>
+						<CardList  robots = {filteredRobots}  /> {/*Cardlist accepts the robots list properties*/}
+					</Scroll>
+				</div>
+				);
+			}
+		}
+	
+	}
 export default App;

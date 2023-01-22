@@ -2,10 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import 'tachyons';
 import reportWebVitals from './reportWebVitals';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  /*We need to return a single element with JSX react so we will wrap it up in a div*/
   <React.StrictMode>
     <App />
   </React.StrictMode>
