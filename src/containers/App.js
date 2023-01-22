@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import CardList from './CardList';
+import CardList from '../components/CardList';
 /*import {robots} from './robots';*/ /*replacing with fetch*/
-import SearchBox from './SearchBox';
+import SearchBox from '../components/SearchBox';
 import './App.css'
-import Scroll from './Scroll';
+import Scroll from '../components/Scroll';
 
 class App extends Component {
 	/*We want to keep track of the states and need a constructor*/
