@@ -26,11 +26,13 @@ class App extends Component {
 		this.setState({ searchfield: event.target.value}) /* Modify the value of the serachfield property which is linked to the searchbox..which is linked to robots array.*/
 	}
 	render() {
-		const filteredRobots = this.state.robots.filter(robots =>{
-			return robots.name.toLowerCase().includes(this.state.searchfield.toLowerCase());
+		/*Destructuring to remove repetitive this.state throughout code*/
+		const {robots, searchfield} = this.state;
+		const filteredRobots = robots.filter(robot =>{
+			return robot.name.toLowerCase().includes(searchfield.toLowerCase());
 		})
 		/*If it takes long to load then display loading.*/
-		if (this.state.robots.length === 0) {
+		if (robots.length === 0) {
 			return <h1>Loading</h1>
 		}else{
 			return (
